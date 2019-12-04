@@ -14,4 +14,6 @@ Other than the range rule, the following are true:
 223450 does not meet these criteria (decreasing pair of digits 50).
 123789 does not meet these criteria (no double).
 How many different passwords within the range given in your puzzle input meet these criteria?
+
+Your puzzle answer was 1079.
 ```
