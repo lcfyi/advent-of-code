@@ -86,7 +86,7 @@ class Amplifier {
         this.ptr = params[0] === 0 ? params[1] : this.ptr + this.OFFSETS[opc];
         return;
       case 7:
-        this.code[this.code[this.ptr + 3]] = params[0] < parmas[1] ? 1 : 0;
+        this.code[this.code[this.ptr + 3]] = params[0] < params[1] ? 1 : 0;
         break;
       case 8:
         this.code[this.code[this.ptr + 3]] = params[0] === params[1] ? 1 : 0;
