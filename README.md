@@ -98,3 +98,11 @@ Factorio, basically.
 For part 1, the file was parsed into a map of the element to the amount produced and the components required. The target element (in this case, FUEL) was then passed into a recursive function that tracked the number of excess materials we had; we continue to create elements (unless we had excess) until we hit the base case (the resource being ORE).
 
 For part 2, part 1 was repeated many times until we found the right fuel amount to create. This was done by doing a binary search on a large search space.
+
+## Day 15: Oxygen System (C)
+
+IntCode in C. A maze was traversed with an IntCode robot. Since the maze doesn't have loops, our searches are much easier.
+
+For part 1, the maze generation was bruteforced by running the robot in random directions to generate the maze for `n` (5 here) iterations. Once the maze was generated, a recursive DFS was done to determine the shortest path to the oxygen from the origin. The visited parts of the path were tracked with a 2D array acting as a bitmap.
+
+For part 2, the same bruteforced maze was used to find the oxygen's location. Then a DFS was done to determine the maximum number of minutes it would take to fill the maze; since the maze is mutable, the filled areas were simply marked with oxygen's symbol.
