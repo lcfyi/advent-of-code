@@ -106,3 +106,11 @@ IntCode in C. A maze was traversed with an IntCode robot. Since the maze doesn't
 For part 1, the maze generation was bruteforced by running the robot in random directions to generate the maze for `n` (5 here) iterations. Once the maze was generated, a recursive DFS was done to determine the shortest path to the oxygen from the origin. The visited parts of the path were tracked with a 2D array acting as a bitmap.
 
 For part 2, the same bruteforced maze was used to find the oxygen's location. Then a DFS was done to determine the maximum number of minutes it would take to fill the maze; since the maze is mutable, the filled areas were simply marked with oxygen's symbol.
+
+## Day 16: Flawed Frequency Transmission (Python)
+
+Calculating the signal by applying a pattern to each an input to determine a phase. These solutions were run with PyPy, which resulted in a much faster runtime. Nested for loop list comprehensions are neat. 
+
+For part 1, a generator was used to create the pattern, at which point the output was simply bruteforced by the number of iterations required. 
+
+For part 2, the fluke came from noticing that the output always ended on the same value, and that the second half of the output's numbers were `output[i] = (output[i + 1] + input[i]) % 10`. Since the offset was far beyond the halfway mark, the input multiplied could be sliced to just `[offset:end]` before generating each phase. The phase generation was also simply a reverse iteration from the back of the array, taking the cumulative sum as we go along. PyPy made this quite performant. 
