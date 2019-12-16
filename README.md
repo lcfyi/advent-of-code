@@ -114,3 +114,25 @@ Calculating the signal by applying a pattern to each an input to determine a pha
 For part 1, a generator was used to create the pattern, at which point the output was simply bruteforced by the number of iterations required. 
 
 For part 2, the fluke came from noticing that the output always ended on the same value, and that the second half of the output's numbers were `output[i] = (output[i + 1] + input[i]) % 10`. Since the offset was far beyond the halfway mark, the input multiplied could be sliced to just `[offset:end]` before generating each phase. The phase generation was also simply a reverse iteration from the back of the array, taking the cumulative sum as we go along. PyPy made this quite performant. 
+
+### Addendum
+
+I think this problem deserves a slightly better explanation.
+
+Given the example input:
+<pre>
+Input signal: 12345678
+
+1*1  + 2*0  + 3*-1 + 4*0  + 5*1  + 6*0  + 7*-1 + 8*0  = 4
+1*0  + 2*1  + 3*1  + 4*0  + 5*0  + 6*-1 + 7*-1 + 8*0  = 8
+1*0  + 2*0  + 3*1  + 4*1  + 5*1  + 6*0  + 7*0  + 8*0  = 2
+1*0  + 2*0  + 3*0  + 4*1  + 5*1  + 6*1  + 7*1  + 8*0  = 2
+1*0  + 2*0  + 3*0  + 4*0  + <b>5*1  + 6*1  + 7*1  + 8*1  = 6</b>
+1*0  + 2*0  + 3*0  + 4*0  + 5*0  + <b>6*1  + 7*1  + 8*1  = 1</b>
+1*0  + 2*0  + 3*0  + 4*0  + 5*0  + 6*0  <b>+ 7*1  + 8*1  = 5</b>
+1*0  + 2*0  + 3*0  + 4*0  + 5*0  + 6*0  + 7*0  <b>+ 8*1  = 8</b>
+</pre>
+
+The bottom half digits (6158) are simply the cumulation sum from the number's position to the end. This holds even if you reduce the number of digits, thus it's a reliable method in calculating the latter half of the solution for an arbitrary input (which is the part the solution cares about).
+
+A further optimization could be done by summing up only to the offset; the subsequent values will not depend on any earlier values so this also greatly speeds up our computation (in the problem input, the offset has us only calculate the last 522397 digits, compared to the 3250000 valid digits *per phase*).
